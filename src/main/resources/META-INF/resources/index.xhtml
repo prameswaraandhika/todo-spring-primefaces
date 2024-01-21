@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<h:html xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Todo App</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@^3/primeflex.css"/>
+</h:head>
+<div class="card">
+    <h:form id="form-todo">
+        <p:growl id="message" showDetail="true"/>
+        <div class="card">
+            <p:menubar>
+                <p:menuitem value="Home" icon="pi pi-fw pi-user"
+                            update=":form-todo:todo-table"
+                            actionListener="#{indexController.loadData}"/>
+                <p:menuitem value="New Todo" icon="pi pi-fw pi-plus"
+                            actionListener="#{indexController.addTodo}"
+                            update=":modal-form:todo-window"
+                            oncomplete="PF('todoModalWindow').show()"/>
+            </p:menubar>
+        </div>
+        <div class="card">
+            <p:dataTable value="#{indexController.todos}" var="todo"
+                         id="todo-table" widgetVar="todosTable">
+
+                <f:facet name="header">
+                    <div class="flex justify-content-center flex-wrap
+                        card-container yellow-container">
+                        <div class="flex align-items-center justify-content-center
+                                        w-20rem h-4rem bg-yellow-500 font-bold
+                                        text-gray-900 border-round m-2">
+                            <h3>Todo System</h3>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{todo.idtodo}"/>
+                </p:column>
+
+                <p:column headerText="Name">
+                    <h:outputText value="#{todo.name}"/>
+                </p:column>
+
+                <p:column headerText="Time">
+                    <h:outputText value="#{todo.time}"/>
+                </p:column>
+
+                <p:column>
+                    <p:commandButton value="Edit" icon="pi pi-pencil"
+                                     update=":modal-form:todo-window"
+                                     oncomplete="PF('todoModalWindow').show()"
+                                     process="@this"
+                                     class="ui-button-primary"
+                                     style="margin-right: .5rem">
+                        <f:setPropertyActionListener
+                                target="#{indexController.selectedTodo}"
+                                value="#{Todo}"/>
+                        <p:resetInput target=":modal-form:todo-window"/>
+                    </p:commandButton>
+                    <p:commandButton value="Delete" class="ui-button-danger"
+                                     icon="pi pi-trash"
+                                     process="@this"
+                                     oncomplete="PF('deleteTodoWindow').show()">
+                        <f:setPropertyActionListener
+                                target="#{indexController.selectedTodo}"
+                                value="#{Todo}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+        </div>
+    </h:form>
+    <h:form id="modal-form">
+        <p:dialog header="Todo Details" showEffect="fade"
+                  modal="true" widgetVar="todoModalWindow"
+                  resposive="true">
+            <p:outputPanel id="todo-window" class="ui-fluid">
+                <div class="field">
+                    <p:outputLabel for="name">Name</p:outputLabel>
+                    <p:inputText id="name"
+                                 value="#{indexController.selectedTodo.name}"
+                                 required="true"/>
+                </div>
+                <div class="field">
+                    <p:outputLabel for="popup" value="Popup:"/>
+                    <p:calendar id="popup" value="#{indexController.selectedTodo.time}"/>
+                </div>
+            </p:outputPanel>
+            <f:facet name="footer">
+                <p:commandButton value="Save" icon="pi pi-check"
+                                 process="todo-window @this"
+                                 actionListener="#{indexController.saveTodo}"
+                />
+                <p:commandButton value="Cancel" icon="pi pi-times"
+                                 onclick="PF('todoModalWindow').hide()"
+                                 class="ui-button-secondary" type="button"/>
+            </f:facet>
+        </p:dialog>
+        <p:confirmDialog widgetVar="deleteTodoWindow"
+                         showEffect="fade" width="300"
+                         message="Delete the todo?"
+                         header="Confirm" severity="warn">
+            <p:commandButton value="Yes" icon="pi pi-check"
+                             actionListener="#{indexController.delete}"
+                             process="@this"
+                             oncomplete="PF('deleteTodoWindow').hide()"/>
+            <p:commandButton value="No" type="button"
+                             styleClass="ui-button-secondary"
+                             icon="pi pi-times"
+                             onclick="PF('deleteTodoWindow').hide()"/>
+        </p:confirmDialog>
+    </h:form>
+</div>
+</h:html>
