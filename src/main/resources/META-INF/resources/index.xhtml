@@ -37,7 +37,7 @@
                 </f:facet>
 
                 <p:column headerText="Id">
-                    <h:outputText value="#{todo.idtodo}"/>
+                    <h:outputText value="#{todo.id}"/>
                 </p:column>
 
                 <p:column headerText="Name">
@@ -85,7 +85,7 @@
                                  required="true"/>
                 </div>
                 <div class="field">
-                    <p:outputLabel for="popup" value="Popup:"/>
+                    <p:outputLabel for="popup" value="Date:"/>
                     <p:calendar id="popup" value="#{indexController.selectedTodo.time}"/>
                 </div>
             </p:outputPanel>
