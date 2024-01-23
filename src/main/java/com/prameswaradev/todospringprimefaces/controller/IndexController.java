@@ -42,8 +42,7 @@ public class IndexController {
 
     public void saveTodo(){
         log.info("Todo has been saved: " + this.selectedTodo);
-        // Add
-        if (this.selectedTodo.getId() == null) {
+        if (this.selectedTodo.getId() == null) { // Add
             this.todoService.createTodo(this.selectedTodo);
             this.todos.add(this.selectedTodo);
             FacesContext.getCurrentInstance().addMessage(null,
@@ -54,13 +53,17 @@ public class IndexController {
                     new FacesMessage("Todo Updated"));
         }
         PrimeFaces.current().executeScript("PF('todoModalWindow').hide()");
-        PrimeFaces.current().ajax().update("form-todo:messages",
+        PrimeFaces.current().ajax().update("form-todo:message",
                 "form-todo:todo-table");
 
         this.selectedTodo = null;
     }
     public void deleteTodo(){
-
-    }
+        todoService.deleteTodo(this.selectedTodo);
+        todos.remove(this.selectedTodo);
+        selectedTodo = null;
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Todo Removed"));
+        PrimeFaces.current().ajax().update("form-todo:message",
+                "form-todo:todo-table");    }
 }
 

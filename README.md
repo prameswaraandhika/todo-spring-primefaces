@@ -1,6 +1,6 @@
 
 # Todo App
-
+![img.png](img.png)
 This is a simple Todo application built using JavaServer Faces (JSF) with PrimeFaces. The application allows users to manage their todo items with basic CRUD operations.
 
 ## Features
