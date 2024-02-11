@@ -1,4 +1,3 @@
-
 # Todo App
 ![img.png](img.png)
 This is a simple Todo application built using JavaServer Faces (JSF) with PrimeFaces. The application allows users to manage their todo items with basic CRUD operations.
@@ -15,6 +14,9 @@ This is a simple Todo application built using JavaServer Faces (JSF) with PrimeF
 - JavaServer Faces (JSF)
 - PrimeFaces
 - [PrimeFlex](https://www.primefaces.org/primeflex/) for responsive layout
+- Spring Boot 3
+- [Lombok](https://projectlombok.org/) for boilerplate code reduction
+- SLF4J for logging
 
 ## Getting Started
 
