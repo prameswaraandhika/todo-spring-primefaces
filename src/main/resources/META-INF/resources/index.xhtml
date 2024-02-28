@@ -19,6 +19,9 @@
                             actionListener="#{indexController.addTodo}"
                             update=":modal-form:todo-window"
                             oncomplete="PF('todoModalWindow').show()"/>
+                <p:menuitem value="Redirect" icon="pi-chevron-right"
+                            action="#{indexController.redirectToHomePage()}" />
+
             </p:menubar>
         </div>
         <div class="card">

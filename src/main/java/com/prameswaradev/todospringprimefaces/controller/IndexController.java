@@ -4,6 +4,7 @@ import com.prameswaradev.todospringprimefaces.model.Todo;
 import com.prameswaradev.todospringprimefaces.service.TodoService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import lombok.Data;
@@ -13,6 +14,7 @@ import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -33,6 +35,15 @@ public class IndexController {
     private void loadData() {
         this.todos = todoService.listTodos();
         todos.forEach((todo) -> log.info(todo.toString()));
+    }
+
+    public void redirectToHomePage() {
+        try {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("welcome.xhtml");
+        } catch (IOException e) {
+            log.error("Error while redirecting to home page: {}", e.getMessage());
+        }
     }
 
     public void addTodo(){
